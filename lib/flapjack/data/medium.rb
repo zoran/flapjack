@@ -78,9 +78,16 @@ module Flapjack
 
         ret = ret.diff(:id => sched_maint_check_ids) unless sched_maint_check_ids.empty?
 
-        unsched_maint_check_ids = Flapjack::Data::UnscheduledMaintenance.
-          intersect(:start_time => start_range, :end_time => end_range).
-          associated_ids_for(:check).values
+
+        # TODO
+        # This is a bad hack for this guy:
+        # RuntimeError - Currently locking ["Flapjack::Data::Check", "Flapjack::Data::Contact", "Flapjack::Data::Medium", "Flapjack::Data::Rule", "Flapjack::Data::ScheduledMaintenance", "Flapjack::Data::Tag"], cannot lock different set ["Flapjack::Data::UnscheduledMaintenance"]
+        unsched_maint_check_ids = []
+
+        #unsched_maint_check_ids = Flapjack::Data::UnscheduledMaintenance.
+        #  intersect(:start_time => start_range, :end_time => end_range).
+        #  associated_ids_for(:check).values
+
 
         ret = ret.diff(:id => unsched_maint_check_ids) unless unsched_maint_check_ids.empty?
         ret
