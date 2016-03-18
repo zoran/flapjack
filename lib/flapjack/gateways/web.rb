@@ -457,8 +457,8 @@ module Flapjack
         @tags_by_rule_id  = {}
         @media_by_rule_id = {}
 
-        @checks ||= Flapjack::Diner.related(@contact, :checks)
-        @media ||= Flapjack::Diner.related(@contact, :media)
+        @checks = Flapjack::Diner.related(@contact, :checks)
+        @media = Flapjack::Diner.related(@contact, :media)
 
         unless @media.nil? || @media.empty?
           @alerting_checks_by_media_id = @media.inject({}) do |memo, medium|
@@ -467,7 +467,7 @@ module Flapjack
           end
         end
 
-        @rules ||= Flapjack::Diner.related(@contact, :rules)
+        @rules = Flapjack::Diner.related(@contact, :rules)
 
         unless @rules.nil? || @rules.empty?
           @tags_by_rule_id = @rules.inject({}) do |memo, rule|
